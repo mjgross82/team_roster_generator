@@ -57,6 +57,35 @@ newMgr = () => {
   });
 };
 
+newEmp = () => {
+  inquirer.prompt([
+    {
+      type: "list",
+      name: "role",
+      message: "Please select a role for the next team member.",
+      choices: [
+        "Intern",
+        "Engineer",
+        "Finish adding team members."
+      ]
+    }
+  ])
+  .then(response => {
+    switch(response.role) {
+      case "Intern":
+        newIntern();
+        break;
+      case "Engineer":
+        newEng();
+        break;
+      case "Finish adding team members.":
+        fs.writeFileSync(outputPath, render(team));
+        console.log("Your team has been created and written to team.html!");
+        break;
+    }
+  })
+};
+
 // Validation check that a required answer has not been left blank.
 function validBlank(value) {
   if (value != "") return true;

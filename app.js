@@ -30,7 +30,7 @@ const mgrQs = [
     type: "input",
     name: "mgrId",
     message: "Please enter the manager's ID number.",
-    validate: validBlank
+    validate: validId
   },
   {
     type: "input",
@@ -57,7 +57,7 @@ const internQs = [
     type: "input",
     name: "intId",
     message: "Please enter the intern's ID number.",
-    validate: validBlank
+    validate: validId
   },
   {
     type: "input",
@@ -84,7 +84,7 @@ const engQs = [
   type: "input",
   name: "engId",
   message: "Please enter the engineer's ID number.",
-  validate: validBlank
+  validate: validId
 },
 {
   type: "input",
@@ -108,7 +108,7 @@ newMgr = () => {
   inquirer.prompt(mgrQs).then(response => {
     const mgr = new Manager(response.mgrName, response.mgrId, response.mgrEmail, response.mgrOffice);
     team.push(mgr);
-    ids[response.mgrId] = true;
+    // ids[response.mgrId] = true;
     console.log(`
     *** ` + response.mgrName + ` has been added to the team! ***
     `);
@@ -157,7 +157,7 @@ newIntern = () => {
     *** ` + response.intName + ` has been added to the team! ***
     `);
     team.push(intern);
-    ids[response.intId] = true;
+    // ids[response.intId] = true;
     newEmp();
   });
 };
@@ -172,7 +172,7 @@ newEng = () => {
     ***  ` + response.engName + ` has been added to the team! ***
     `);
     team.push(engineer);
-    ids[response.engId] = true;
+    // ids[response.engId] = true;
     newEmp();
   });
 };
@@ -199,6 +199,13 @@ async function validGit(value) {
   } catch (error) {
       return "Please enter a valid GitHub Username.";
   };
+};
+
+// Validation check that a given ID number is unique.
+function validId(value) {
+  if ((ids[value] === true) || (value === "")) return console.log("Please select a unique ID.");
+  ids[value] = true;
+  return true;
 };
 
 // Call the functions to run the program!

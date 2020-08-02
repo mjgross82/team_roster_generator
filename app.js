@@ -12,8 +12,15 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-// An array containing inquirer questions the user will be asked to answer.
-const mgrQs = [{
+// Array to contain all team members.
+let team = [];
+
+// Object to contain all ID numbers.
+const ids = {};
+
+// An array containing inquirer questions about the team manager.
+const mgrQs = [
+  {
     type: "input",
     name: "mgrName",
     message: "Please enter the manager's name.",
@@ -36,14 +43,19 @@ const mgrQs = [{
     name: "mgrOffice",
     message: "Please enter the manager's office number.",
     validate: validBlank
-  },
-  {
-    type: "input",
-    name: "teamSize",
-    message: "How many other members are there on the team?",
-    validate: validBlank
   }
 ];
+
+// A function to create a manager object based on the Manager class and push it to the team array.
+newMgr = () => {
+  console.log("Welcome to Roster Generator. Let's build your team!");
+  inquirer.prompt(mgrQs).then(response => {
+    const mgr = new Manager(response.mgrName, response.mgrId, response.mgrEmail, response.mgrOffice);
+    team.push(mgr);
+    ids[response.mgrId] = true;
+    newEmp();
+  });
+};
 
 // Validation check that a required answer has not been left blank.
 function validBlank(value) {

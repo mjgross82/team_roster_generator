@@ -171,7 +171,7 @@ newEng = () => {
     console.log(`
     ***  ` + response.engName + ` has been added to the team! ***
     `);
-    team.piush(engineer);
+    team.push(engineer);
     ids[response.engId] = true;
     newEmp();
   });

@@ -1,15 +1,62 @@
+// Dependencies declared in the provided assignment template.
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const axios = require("axios");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+// An array containing inquirer questions the user will be asked to answer.
+const mgrQs = [{
+    type: "input",
+    name: "mgrName",
+    message: "Please enter the manager's name.",
+    validate: validBlank
+  },
+  {
+    type: "input",
+    name: "mgrId",
+    message: "Please enter the manager's ID number.",
+    validate: validBlank
+  },
+  {
+    type: "input",
+    name: "mgrEmail",
+    message: "Please enter the manager's email address.",
+    validate: validEmail
+  },
+  {
+    type: "input",
+    name: "mgrOffice",
+    message: "Please enter the manager's office number.",
+    validate: validBlank
+  },
+  {
+    type: "input",
+    name: "teamSize",
+    message: "How many other members are there on the team?",
+    validate: validBlank
+  }
+];
+
+// Validation check that a required answer has not been left blank.
+function validBlank(value) {
+  if (value != "") return true;
+  else return "This section can not be left blank.";
+};
+
+// Confirms that the user entered a valid email address.
+function validEmail(value) {
+  const addy = /\S+@\S+\.\S+/;
+  if (value.match(addy)) return true;
+  else return "Please enter a valid email address.";
+};
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)

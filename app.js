@@ -46,17 +46,50 @@ const mgrQs = [
   }
 ];
 
+const internQs = [
+  {
+    type: "input",
+    name: "intName",
+    message: "Please enter the intern's name.",
+    validate: validBlank
+  },
+  {
+    type: "input",
+    name: "intId",
+    message: "Please enter the intern's ID number.",
+    validate: validBlank
+  },
+  {
+    type: "input",
+    name: "intEmail",
+    message: "Please enter the intern's email address.",
+    validate: validEmail
+  },
+  {
+    type: "input",
+    name: "intSchool",
+    message: "Please enter the name of the intern's school.",
+    validate: validBlank
+  }
+];
+
 // A function to create a manager object based on the Manager class and push it to the team array.
 newMgr = () => {
-  console.log("Welcome to Roster Generator. Let's build your team!");
+  console.log(`
+  *** Welcome to Roster Generator. Let's build your team! ***
+  `);
   inquirer.prompt(mgrQs).then(response => {
     const mgr = new Manager(response.mgrName, response.mgrId, response.mgrEmail, response.mgrOffice);
     team.push(mgr);
     ids[response.mgrId] = true;
+    console.log(`
+    *** ` + response.mgrName + ` has been added to the team! ***
+    `);
     newEmp();
   });
 };
 
+// A function which prompts the user to select a role for a new team member or finish building the team. When finished, calls the render function and passes it the array of team members.
 newEmp = () => {
   inquirer.prompt([
     {
@@ -80,10 +113,26 @@ newEmp = () => {
         break;
       case "Finish adding team members.":
         fs.writeFileSync(outputPath, render(team));
-        console.log("Your team has been created and written to team.html!");
+        console.log(`
+        *** Your team has been created and written to team.html! ***`);
         break;
     }
   })
+};
+
+newIntern = () => {
+  console.log(`
+  Okay, let's add a new intern to the team.
+  `);
+  inquirer.prompt(internQs).then(response => {
+    const intern = new Intern(response.intName, response.intId, response.intEmail, response.intSchool);
+    console.log(`
+    *** ` + response.intName + ` has been added to the team! ***
+    `);
+    team.push(intern);
+    ids[response.intId] = true;
+    newEmp();
+  });
 };
 
 // Validation check that a required answer has not been left blank.
@@ -98,6 +147,9 @@ function validEmail(value) {
   if (value.match(addy)) return true;
   else return "Please enter a valid email address.";
 };
+
+// Call the functions to run the program!
+newMgr();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)

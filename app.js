@@ -141,7 +141,8 @@ newEmp = () => {
       case "Finish adding team members.":
         fs.writeFileSync(outputPath, render(team));
         console.log(`
-        *** Your team has been created and written to team.html! ***`);
+        *** Your team has been created and written to team.html! ***
+        `);
         break;
     }
   })

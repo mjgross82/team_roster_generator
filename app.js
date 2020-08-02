@@ -73,6 +73,33 @@ const internQs = [
   }
 ];
 
+const engQs = [
+{
+  type: "input",
+  name: "engName",
+  message: "Please enter the engineer's name.",
+  validate: validBlank
+},
+{
+  type: "input",
+  name: "engId",
+  message: "Please enter the engineer's ID number.",
+  validate: validBlank
+},
+{
+  type: "input",
+  name: "engEmail",
+  message: "Please enter the engineer's email address.",
+  validate: validEmail
+},
+{
+  type: "input",
+  name: "engGit",
+  message: "Please enter the engineer's GitHub username.",
+  validate: validGit
+}
+];
+
 // A function to create a manager object based on the Manager class and push it to the team array.
 newMgr = () => {
   console.log(`
@@ -135,6 +162,21 @@ newIntern = () => {
   });
 };
 
+newEng = () => {
+  console.log(`
+  Okay, let's add a new engineer to the team.
+  `);
+  inquirer.prompt(engQs).then(response => {
+    const engineer = new Engineer(response.engName, response.engId, response.engEmail, response.engGit);
+    console.log(`
+    ***  ` + response.engName + ` has been added to the team! ***
+    `);
+    team.piush(engineer);
+    ids[response.engId] = true;
+    newEmp();
+  });
+};
+
 // Validation check that a required answer has not been left blank.
 function validBlank(value) {
   if (value != "") return true;
@@ -146,6 +188,17 @@ function validEmail(value) {
   const addy = /\S+@\S+\.\S+/;
   if (value.match(addy)) return true;
   else return "Please enter a valid email address.";
+};
+
+// Confirms that the user entered a valid GitHub username.
+async function validGit(value) {
+  const queryUrl = `https://api.github.com/users/${value}`;
+  try {
+   const response = await axios.get(queryUrl);
+    if (response.status === 200) return true;
+  } catch (error) {
+      return "Please enter a valid GitHub Username.";
+  };
 };
 
 // Call the functions to run the program!

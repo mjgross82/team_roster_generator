@@ -13,7 +13,7 @@
   * [Screenshots](#screenshots)  
   * [Questions](#questions)  
   ## Installation  
-  Navigate to the desired directory using your computer's terminal app and enter "git clone git@github.com:mjgross82/team_roster_generator.git".  
+  Navigate to the desired directory using your computer's terminal app and enter "git clone git@github.com:mjgross82/team_roster_generator.git". Then enter "npm i" to install required node modules.  
   ## Usage  
   Navigate to the team_roster_generator directory using your computer's terminal app and enter "node app.js". The app will ask you a series of questions and then dynamically generate a team.html file in the team_roster_generator/output folder based on your responses.  
   ## License  
@@ -23,12 +23,13 @@
   ## Tests  
   This project was created using test driven development. Enter the command "npm test" in the team_roster_generator directory to see that the application passes a total of 17 tests across 4 test suites which can be reviewed in the test subdirectory.  
   ## Videos  
-  
+  ![GIF demonstration](./assets/demo.gif)  
+  [YouTube Demonstration](https://youtu.be/R1IvgRLmuYI)  
   ## Screnshots  
   ![Command Line Interface App screenshot](./assets/terminalSS.png)  
   ![Sample HTML screenshot](./assets/htmlSS.png)  
   ## Questions  
   If you have any questions regarding this project, please contact me at:  
   GitHub: [mjgross82](https://github.com/mjgross82)  
-  Email: [mjgross82@protonmail.com](mailto:mjgross82@pm.me)
+  Email: [mjgross82@pm.me](mailto:mjgross82@pm.me)
   
